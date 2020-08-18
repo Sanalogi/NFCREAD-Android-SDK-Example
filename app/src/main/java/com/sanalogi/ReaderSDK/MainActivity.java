@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
     private TextView surname;
     private ImageView ownerImage;
     private ImageView docImage;
+    private ImageView docFrontImage;
     private TextView birthDate;
     private TextView expiryDate;
     private TextView placeOfBirth;
@@ -65,11 +66,13 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
     private ScrollView infoScroll;
     private TextView nfcDialogInfo;
     private Button nfcbutton;
+    private Button faceMatchBtn;
     Dialog dialog;
     private ProgressDialog progressBar;
     private SDKModel licence;
     private LinearLayout readerLayout;
     private Handler handler;
+    private PassportModel passportDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,39 +83,52 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        infoScroll = (ScrollView) findViewById(R.id.infoScroll);
-        documentType = (TextView) findViewById(R.id.documentType);
-        documentNumber = (TextView) findViewById(R.id.documentNumber);
-        documentCountry = (TextView) findViewById(R.id.documentCountry);
-        documentOwnerNationality = (TextView) findViewById(R.id.documentOwnerNationality);
-        fullname = (TextView) findViewById(R.id.nfcDialogInfo);
-        idno = (TextView) findViewById(R.id.documentOwnerPersonNumber);
-        name = (TextView) findViewById(R.id.documentOwnerName2);
-        surname = (TextView) findViewById(R.id.documentOwnerSurname);
-        ownerImage = (ImageView) findViewById(R.id.nfcDialogImage);
-        docImage = (ImageView) findViewById(R.id.passportImage);
-        birthDate = (TextView) findViewById(R.id.documentOwnerBirthDate);
-        expiryDate = (TextView) findViewById(R.id.documentExpiryDate);
-        placeOfBirth = (TextView) findViewById(R.id.documentOwnerBirthPlace);
-        phoneNumber = (TextView) findViewById(R.id.documentOwnerPhone);
-        profession = (TextView) findViewById(R.id.documentOwnerProfession);
-        adress = (TextView) findViewById(R.id.documentOwnerAdress);
-        gender = (TextView) findViewById(R.id.documentOwnerGender);
-        mrz = (TextView) findViewById(R.id.documentMRZ);
-        nfcbutton = (Button) findViewById(R.id.nfcbutton);
+        infoScroll = findViewById(R.id.infoScroll);
+        documentType = findViewById(R.id.documentType);
+        documentNumber = findViewById(R.id.documentNumber);
+        documentCountry = findViewById(R.id.documentCountry);
+        documentOwnerNationality = findViewById(R.id.documentOwnerNationality);
+        fullname = findViewById(R.id.nfcDialogInfo);
+        idno = findViewById(R.id.documentOwnerPersonNumber);
+        name = findViewById(R.id.documentOwnerName2);
+        surname = findViewById(R.id.documentOwnerSurname);
+        ownerImage = findViewById(R.id.nfcDialogImage);
+        docImage = findViewById(R.id.passportImage);
+        docFrontImage = findViewById(R.id.idCardFrontImage);
+        birthDate = findViewById(R.id.documentOwnerBirthDate);
+        expiryDate = findViewById(R.id.documentExpiryDate);
+        placeOfBirth = findViewById(R.id.documentOwnerBirthPlace);
+        phoneNumber = findViewById(R.id.documentOwnerPhone);
+        profession = findViewById(R.id.documentOwnerProfession);
+        adress = findViewById(R.id.documentOwnerAdress);
+        gender = findViewById(R.id.documentOwnerGender);
+        mrz = findViewById(R.id.documentMRZ);
+        nfcbutton = findViewById(R.id.nfcbutton);
+        faceMatchBtn = findViewById(R.id.faceMatchBtn);
         infoScroll.setVisibility(View.GONE);
 
         nfcbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Eger terminalden okumak istersen bu satiri aktif hale getirmelisin.
-                Reader.getInstance().startReadFromTerminal();
+                //Reader.getInstance().startReadFromTerminal();
                 showMyCustomAlertDialog();
             }
         });
 
-        settingsForNFCREAD();
+        faceMatchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (passportDatas != null){
+                    Intent intent = new Intent(MainActivity.this,FaceMatchActivity.class);
+                    intent.putExtra("firstEncodedbase64",passportDatas.getBiometricImage());
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
+        settingsForNFCREAD();
     }
 
     void settingsForNFCREAD() {
@@ -144,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
                                 .setContext(MainActivity.this)
                                 .setSdkModel(licence)
                                 .setLinearLayout(readerLayout)
-                                .setCardType(CardType.Passport)
+                                .setCardType(CardType.IdCard)
                                 .setScanResultInterface(MainActivity.this)
                                 .setNfcScanResultInterface(MainActivity.this)
                                 .build();
@@ -213,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
         super.onRestart();
         infoScroll.setVisibility(View.GONE);
         nfcbutton.setVisibility(View.GONE);
+        faceMatchBtn.setVisibility(View.GONE);
         progressBar.dismiss();
     }
 
@@ -229,7 +246,6 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
         Log.d(TAG, "onNewIntent: ");
         super.onNewIntent(intent);
         Reader.getInstance().onNewIntent(intent);
-
     }
 
     @Override
@@ -265,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
             public void onCancel(DialogInterface dialogInterface) {
                 infoScroll.setVisibility(View.GONE);
                 nfcbutton.setVisibility(View.GONE);
+                faceMatchBtn.setVisibility(View.GONE);
                 progressBar.dismiss();
             }
         });
@@ -274,12 +291,19 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
 
     @Override
     public void scanResult(PassportModel passportModel) {
-        Log.d("heyhey", "result: " + passportModel.toString());
         if (passportModel != null) {
             Log.d("heyhey", "result: " + passportModel.toString());
+            passportDatas = passportModel;
             setDocValues(passportModel);
+
+            if (passportModel.getIdCardFrontImage() != null) {
+                docFrontImage.setVisibility(View.VISIBLE);
+                docFrontImage.setImageBitmap(passportModel.getIdCardFrontImage());
+            }
+
             infoScroll.setVisibility(View.VISIBLE);
             nfcbutton.setVisibility(View.VISIBLE);
+            faceMatchBtn.setVisibility(View.VISIBLE);
             try {
                 //OCR isleminden sonra NFC ile okuma baslatmak icin
                 Reader.getInstance().setPassportData(passportModel);
@@ -294,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
     public void nfcResult(PassportModel nfcData) {
         try {
             if (nfcData != null) {
+                passportDatas = nfcData;
                 setDocValues(nfcData);
                 Log.d(TAG, "result: " + nfcData.toString());
                 dialog.dismiss();

@@ -15,10 +15,18 @@ NFC Read is a tool designed for reading and verifying the official documents suc
 ## 1: Add the Jitpack repository to your build.gradle file (root/build.gradle)
 
 ```groovy
+buildscript {
+    repositories {
+        mavenCentral()
+        ...
+     }
+     ...
+}
 
 allprojects {
         repositories {
             ...
+            mavenCentral()
             maven {
                 url 'https://jitpack.io'
                 credentials { username authToken }
@@ -30,7 +38,7 @@ allprojects {
 ## 2: Include the Jitpack token to your gradle.properties (root/gradle.properties)
 
 ```xml
-    authToken=jp_t16hlb40n8dv8ffp7rs7b1vul7
+    authToken=jp_rq9s6sa9v1pop0jrovb9ird10k
 ```
 
 ## 3: Add the dependencies to your app's build.gradle file (app/build.gradle)
@@ -45,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.7'
+    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.15'
 }
 ```
 

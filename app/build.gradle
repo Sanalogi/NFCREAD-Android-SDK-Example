@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.sanalogi.denemesdkproject"
+        applicationId "com.sanalogi.ReaderSDK"
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
@@ -42,10 +42,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-//  Jitpack uzerinden getir
-    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.7'
-
-//    Lokal Maven Repo olarak getir
-//    implementation ('com.sanalogi:cameralibrary:1.0.0@aar'){transitive=true}
-
+    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.15'
 }
