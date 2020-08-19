@@ -53,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.15'
+    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.16'
 }
 ```
 
@@ -142,14 +142,14 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
             public void handleMessage(Message msg) {
 
                 if (msg.what == 0) {
-                    Toast.makeText(getApplicationContext(), "Lisans olusturulamadi", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "License could not be created", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (msg.what == 1) {
                     try {
                         Reader reader = new Reader.Builder()
-                                .setContext(MainActivity.this) 
+                                .setContext(MainActivity.this)
                                 .setSdkModel(licence) //sets up the permissions on the SDK Model
                                 .setLinearLayout(readerLayout) //Required for enabling the camera view
                                 .setCardType(CardType.Passport) // Selects and sets the card type
@@ -244,6 +244,103 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
     protected void onResume() {
         super.onResume();
         Reader.getInstance().onResume();
+    }
+
+}
+```
+** Add the following code to your activity code, in this example it is FaceMatchActivity.java **
+
+```java
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.sanalogi.cameralibrary.Engine;
+import com.sanalogi.cameralibrary.FaceMatching;
+import com.sanalogi.cameralibrary.FaceResultInterface;
+import com.sanalogi.cameralibrary.IEngineCallback;
+import com.sanalogi.cameralibrary.SDKModel;
+
+public class FaceMatchActivity extends AppCompatActivity implements FaceResultInterface {
+
+    LinearLayout faceMatchLayout;
+    Bitmap passportFace;
+    private SDKModel licence;
+    private Handler handler;
+    private final String TAG = "FaceMatchActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+        setContentView(R.layout.activity_face_match);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        faceMatchLayout = findViewById(R.id.readerLayout);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+
+                if (msg.what == 0) {
+                    Toast.makeText(getApplicationContext(), "License could not be created", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (msg.what == 1) {
+                    try {
+                        FaceMatching reader = new FaceMatching.Builder()
+                                .setContext(FaceMatchActivity.this)
+                                .setSdkModel(licence)//sets up the permissions on the SDK Model
+                                .setLinearLayout(faceMatchLayout)//Required for enabling the camera view
+                                .setFaceToBeMatch(passportFace)//Photo desired to be compared
+                                .setOptionData("NFCREAD-FACE-MATCHING")// Optional parameter for logging purposes
+                                .setSendFaceData(FaceMatchActivity.this)//Used for obtaining the results of the face matching
+                                .build();
+                        Log.d(TAG, "run: " + licence);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        new Thread(() -> {
+
+            Engine.getInstance().initEngine(FaceMatchActivity.this, new IEngineCallback() {
+                @Override
+                public void onSuccess(SDKModel sdkModel) {
+                    licence = sdkModel;
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    ex.printStackTrace();
+                    handler.sendEmptyMessage(0);
+                }
+            });
+            handler.sendEmptyMessage(1);
+
+        }).start();
+
+    }
+
+    @Override
+    public void status(String status) {
+        Log.d("NFCREAD", "status: "+status);
+    }
+
+    @Override
+    public void success(Bitmap bmp) {
+
     }
 
 }
