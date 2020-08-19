@@ -53,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.16'
+    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.0.17'
 }
 ```
 
@@ -339,8 +339,8 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
     }
 
     @Override
-    public void success(Bitmap bmp) {
-
+    public void result(String s) {
+        Log.d("NFCREAD", "result: "+s);
     }
 
 }

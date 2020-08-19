@@ -27,7 +27,6 @@ import com.sanalogi.cameralibrary.SDKModel;
 public class FaceMatchActivity extends AppCompatActivity implements FaceResultInterface {
 
     LinearLayout faceMatchLayout;
-    ImageView faceImage;
     TextView faceInfo;
     Bitmap passportFace;
     private SDKModel licence;
@@ -44,7 +43,6 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
         setContentView(R.layout.activity_face_match);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        faceImage = findViewById(R.id.faceImage);
         faceInfo = findViewById(R.id.faceInfo);
 
         /* kimlik okunduktan sonra gelen biometrik foto kullanilmak istendiginde bir onceki
@@ -118,21 +116,24 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
         }).start();
     }
 
-    @Override
-    public void status(String status) {
-        Log.d("NFCREAD", "status: "+status);
+    void setText(String text){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                faceInfo.setText(status);
+                faceInfo.setText(text);
             }
         });
     }
 
     @Override
-    public void success(Bitmap bmp) {
-//        faceImage.setVisibility(View.VISIBLE);
-//        faceImage.setImageBitmap(bmp);
+    public void status(String status) {
+        Log.d("NFCREAD", "status: "+status);
+        setText(status);
+    }
+
+    @Override
+    public void result(String s) {
+        setText(s);
     }
 
 }
