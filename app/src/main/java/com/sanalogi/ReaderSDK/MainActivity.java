@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
                                 .setSdkModel(licence)
                                 .setLinearLayout(readerLayout)
                                 .setCardType(CardType.IdCard)
+                                .enableIDCardFrontScan(true)
                                 .setScanResultInterface(MainActivity.this)
                                 .setNfcScanResultInterface(MainActivity.this)
                                 .build();
@@ -307,6 +308,17 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
             try {
                 //OCR isleminden sonra NFC ile okuma baslatmak icin
                 Reader.getInstance().setPassportData(passportModel);
+                //NFC okuması sırasındaki aşamaları isteğe göre ayarlar
+                String[] arr ={
+                        "NFC çipine bağlanılıyor.",
+                        "NFC çipine bağlanıldı.",
+                        "Kimlik bilgileri alınıyor, lütfen bekleyiniz.",
+                        "Kimlik bilgiler alındı.",
+                        "Kimlik sahibinin bilgileri alınıyor",
+                        "Kimlik sahibinin bilgileri alındı.",
+                        "Kimlik sahibinin biometrik resmi alınıyor.",
+                        "Kimlik sahibinin bilgileri alındı."};;
+                Reader.getInstance().setNfcScanSteps(arr);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
