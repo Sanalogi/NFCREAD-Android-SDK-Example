@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
                 Log.e(TAG, "handleMessage: " + msg.what);
 
                 if (msg.what == 0) {
-                    Toast.makeText(getApplicationContext(), "Lisans olusturulamadi", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Lisans oluşturulamadı", Toast.LENGTH_LONG).show();
                     return;
                 }
 

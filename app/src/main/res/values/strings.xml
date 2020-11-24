@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">NFCREADSDK</string>
-    <string name="apiKey">APIKEY</string>
+    <string name="apiKey">Your API key goes here</string>
 </resources>

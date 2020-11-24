@@ -63,25 +63,25 @@ After performing this step, run Gradle Sync to let Android Studio download the t
 
 ```xml
 <application
-         ...
-        android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true">
+	 ...
+	android:requestLegacyExternalStorage="true"
+	android:usesCleartextTraffic="true">
 
-        <meta-data android:name="com.sanalogi.cameralibrary" android:value="@string/apiKey" />
+	<meta-data android:name="com.sanalogi.cameralibrary" android:value="@string/apiKey" />
 
-        <activity
-            ...
-        </activity>
-    </application>
+	<activity
+		...
+	</activity>
+</application>
 ```
 
 ## 5: Include the provided APIKEY to your strings.xml file: (res/values/strings.xml)
 
 ```xml
-    <resources>
-        ...
-        <string name="apiKey">Your API key goes here</string>
-    </resources>
+<resources>
+	...
+	<string name="apiKey">Your API key goes here</string>
+</resources>
 ```
 
 ## Getting started with the SDK
@@ -89,12 +89,12 @@ After performing this step, run Gradle Sync to let Android Studio download the t
 ** Include the following LinearLayout to your activity's XML file, in this example it is activity_main.xml **
 
 ```xml
-            <LinearLayout
-             android:id="@+id/readerLayout"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@android:color/black"
-             android:orientation="vertical" />
+<LinearLayout
+ android:id="@+id/readerLayout"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:background="@android:color/black"
+ android:orientation="vertical" />
 ```
 
 ** Add the following code to your activity code, in this example it is MainActivity.java **
@@ -345,3 +345,41 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
 
 }
 ```
+
+## Reducing the size of your application
+
+One of the most commonly asked questions about the NFCRead is reducing the size of the library. Since we include external libraries for performing various scans inside the SDK, these packages comes with dynamically linked shared object 
+libraries(.so) that are compiled for different CPU architechtures that are commonly used in the mobile phones. The list of these supported instruction sets are like in the following:
+
+-armeabi-v7a (Instruction set for 32bit ARM Processors)
+
+-arm64-v8a (Instruction set for 64bit ARM Processors)
+
+-x86 (Instruction set for 32bit Intel and AMD Processors)
+
+-x86_64 (Instruction set for 64bit Intel and AMD Processors)
+
+To learn more details about these instruction sets and ABIs, please visit [this link](https://developer.android.com/ndk/guides/abis).
+
+The way we suggest for reducing the size of your application is creating four separate APK files that are each compiled for a specific instruction set. According to [the rules of Google Play Store](https://developer.android.com/google/play/publishing/multiple-apks) 
+it is possible to upload four different APK files and the Play Store application located on user devices will automatically determine which APK to be installed.
+
+### To reduce the size of your APK:
+
+Navigate to your app level build.gradle file (app/build.gradle) and add the following command:
+
+```groovy
+android{
+	...
+	splits {
+		abi {
+			enable true
+			reset()
+			include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+			universalApk false
+		}
+	}
+}
+```
+
+For more detailed instructions and information about splits function can be found in [link](https://developer.android.com/studio/build/configure-apk-splits)
