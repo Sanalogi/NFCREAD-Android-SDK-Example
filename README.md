@@ -53,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogireaderandroid:1.1.4'
+    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.1.5'
 }
 ```
 
@@ -361,8 +361,8 @@ libraries(.so) that are compiled for different CPU architechtures that are commo
 
 To learn more details about these instruction sets and ABIs, please visit [this link](https://developer.android.com/ndk/guides/abis).
 
-The way we suggest for reducing the size of your application is creating four separate APK files that are each compiled for a specific instruction set. According to [the rules of Google Play Store](https://developer.android.com/google/play/publishing/multiple-apks) 
-it is possible to upload four different APK files and the Play Store application located on user devices will automatically determine which APK to be installed.
+The way we suggest for reducing the size of your application is creating four separate APK files that are each compiled for a specific instruction set. Google Play Store supports  [the publishing of multiple APK files](https://developer.android.com/google/play/publishing/multiple-apks)
+, hence it is possible to upload four different APK files and the Play Store application located on user devices will automatically determine which APK to be installed.
 
 ### To reduce the size of your APK:
 
@@ -370,16 +370,16 @@ Navigate to your app level build.gradle file (app/build.gradle) and add the foll
 
 ```groovy
 android{
-	...
-	splits {
-		abi {
-			enable true
-			reset()
-			include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-			universalApk false
-		}
-	}
+    ...
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            universalApk false
+        }
+    }
 }
 ```
 
-For more detailed instructions and information about splits function can be found in [link](https://developer.android.com/studio/build/configure-apk-splits)
+For more detailed instructions and information about splits function can be found in [here](https://developer.android.com/studio/build/configure-apk-splits)

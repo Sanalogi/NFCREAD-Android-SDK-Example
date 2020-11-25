@@ -317,7 +317,8 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
                         "Kimlik sahibinin bilgileri alınıyor",
                         "Kimlik sahibinin bilgileri alındı.",
                         "Kimlik sahibinin biometrik resmi alınıyor.",
-                        "Kimlik sahibinin bilgileri alındı."};;
+                        "Kimlik sahibinin bilgileri alındı.",
+                        "NFC okuması tamamlandı."};
                 Reader.getInstance().setNfcScanSteps(arr);
             } catch (Exception ex) {
                 ex.printStackTrace();
