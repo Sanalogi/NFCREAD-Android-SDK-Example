@@ -385,12 +385,12 @@ android{
 
 More detailed instructions and information about splits function can be found in [here](https://developer.android.com/studio/build/configure-apk-splits)
 
-##My application crashes after I set minifyEnabled to true
+## My application crashes after I set minifyEnabled to true
 
 As mentioned before, NFCRead SDK relies on multiple libraries, one of them being OpenCV. When minifyEnabled is set true, the version of OpenCV we bundle alongside the NFCRead SDK 
 is also getting obfuscated alongside with the rest of the application. This essentially prevents the NFCRead library from accessing the OpenCV classes and methods and causes crashes.
 
-###To prevent your application from crashing:
+### To prevent your application from crashing:
 
 Simply navigate to your proguard-rules.pro file and add the following rule:
 
