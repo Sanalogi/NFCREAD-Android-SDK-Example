@@ -345,7 +345,7 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
 
 }
 ```
-#Frequently Asked Questions
+# Frequently Asked Questions
 
 ## Reducing the size of your application
 
