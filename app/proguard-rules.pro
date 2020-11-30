@@ -25,3 +25,7 @@
 }
 # This prevents OpenCV related software crashes
 -keep class org.opencv.** { *;}
+
+# This prevents NFC related software bugs
+-keep class net.sf.scuba.smartcards.IsoDepCardService {*;}
+-keep class org.spongycastle.**{*;}

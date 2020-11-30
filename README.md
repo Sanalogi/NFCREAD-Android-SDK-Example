@@ -53,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.1.5'
+    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.1.6'
 }
 ```
 
@@ -399,3 +399,16 @@ Simply navigate to your proguard-rules.pro file and add the following rule:
 ```
 
 The rule above prevents the obfuscation of the OpenCV library that is bundled with the NFCRead SDK, and prevents further obfuscation related crashes.
+
+## NFC feature stops working after I set minifyEnabled to true
+
+Similar to OpenCV related crashes, this bug is also caused by another library getting obfuscated by ProGuard.
+
+### To prevent NFC related issues:
+
+Simply navigate to your proguard-rules.pro file and add the following rule:
+
+```proguard
+-keep class net.sf.scuba.smartcards.IsoDepCardService {*;}
+-keep class org.spongycastle.**{*;}
+```
