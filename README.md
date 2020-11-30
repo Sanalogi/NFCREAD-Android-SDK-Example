@@ -402,7 +402,7 @@ The rule above prevents the obfuscation of the OpenCV library that is bundled wi
 
 ## NFC feature stops working after I set minifyEnabled to true
 
-Similar to OpenCV related crashes, this bug is also caused by another library getting obfuscated by ProGuard.
+Similar to OpenCV related crashes, this bug is also caused by other external libraries getting obfuscated by ProGuard.
 
 ### To prevent NFC related issues:
 
