@@ -409,6 +409,10 @@ Similar to OpenCV related crashes, this bug is also caused by other external lib
 Simply navigate to your proguard-rules.pro file and add the following rule:
 
 ```proguard
--keep class net.sf.scuba.smartcards.IsoDepCardService {*;}
--keep class org.spongycastle.**{*;}
+-keep class net.sf.scuba.smartcards.IsoDepCardService { *;}
+-keep class org.spongycastle.** { *;}
+-keep class org.bouncycastle.** { *;}
 ```
+
+If there are further issues observed due to this crash, please get in contact with the NFCRead team if you're running a version of NFCRead SDK version 1.1.7 or later.
+Please make sure to add the logcat logs by filtering with NFCREAD tag.

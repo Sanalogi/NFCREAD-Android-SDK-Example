@@ -28,4 +28,5 @@
 
 # This prevents NFC related software bugs
 -keep class net.sf.scuba.smartcards.IsoDepCardService {*;}
--keep class org.spongycastle.**{*;}
+-keep class org.spongycastle.** {*;}
+-keep class org.bouncycastle.** {*;}
