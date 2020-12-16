@@ -310,15 +310,15 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
                 Reader.getInstance().setPassportData(passportModel);
                 //NFC okuması sırasındaki aşamaları isteğe göre ayarlar
                 String[] arr ={
-                        "NFC çipine bağlanılıyor.",
-                        "NFC çipine bağlanıldı.",
-                        "Kimlik bilgileri alınıyor, lütfen bekleyiniz.",
-                        "Kimlik bilgiler alındı.",
-                        "Kimlik sahibinin bilgileri alınıyor",
-                        "Kimlik sahibinin bilgileri alındı.",
-                        "Kimlik sahibinin biometrik resmi alınıyor.",
-                        "Kimlik sahibinin bilgileri alındı.",
-                        "NFC okuması tamamlandı."};
+                        "1 NFC çipine bağlanılıyor.",
+                        "2 NFC çipine bağlanıldı.",
+                        "3 Kimlik bilgileri alınıyor, lütfen bekleyiniz.",
+                        "4 Kimlik bilgiler alındı.",
+                        "5 Kimlik sahibinin bilgileri alınıyor",
+                        "6 Kimlik sahibinin bilgileri alındı.",
+                        "7 Kimlik sahibinin biometrik resmi alınıyor.",
+                        "8 Kimlik sahibinin bilgileri alındı.",
+                        "9 NFC okuması tamamlandı."};
                 Reader.getInstance().setNfcScanSteps(arr);
             } catch (Exception ex) {
                 ex.printStackTrace();

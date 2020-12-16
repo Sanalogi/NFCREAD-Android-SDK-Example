@@ -53,7 +53,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.1.6'
+    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.2.0'
 }
 ```
 
@@ -416,3 +416,5 @@ Simply navigate to your proguard-rules.pro file and add the following rule:
 
 If there are further issues observed due to this crash, please get in contact with the NFCRead team if you're running a version of NFCRead SDK version 1.1.7 or later.
 Please make sure to add the logcat logs by filtering with NFCREAD tag.
+
+## The SDK takes 10 seconds to load from time to time
