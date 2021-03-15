@@ -84,6 +84,8 @@ After performing this step, run Gradle Sync to let Android Studio download the t
 </resources>
 ```
 
+To learn more about generating API keys, please refer to the Frequently Asked Questions section below.
+
 ## Getting started with the SDK
 
 ** Include the following LinearLayout to your activity's XML file, in this example it is activity_main.xml **
@@ -248,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
 
 }
 ```
+
 ** Add the following code to your activity code, in this example it is FaceMatchActivity.java **
 
 ```java
@@ -345,11 +348,18 @@ public class FaceMatchActivity extends AppCompatActivity implements FaceResultIn
 
 }
 ```
+
 # Frequently Asked Questions
+
+## Generating API keys
+
+Please note that this step requires having a NFC developer account. For registering, please head to our [signup page](https://login.nfcread.com/signup)
+
+If you have a developer account, simply navigate to [login.nfcread.com](https://login.nfcread.com) and enter your credentials. Once logged in select "NFCRead SDK Key" on the leftmost menu, press on the "GENERATE NFCRead Mobile SDK Key" button and then follow through with the steps.
 
 ## Reducing the size of your application
 
-One of the most commonly asked questions about the NFCRead is reducing the size of the library. Since we include external libraries for performing various scans inside the SDK, these packages comes with dynamically linked shared object 
+One of the most commonly asked questions about the NFCRead is reducing the size of the library. Since we include external libraries for performing various scans inside the SDK, these packages comes with dynamically linked shared object
 libraries (.so) that are compiled for different CPU architectures used widely in the mobile phones. The list of these supported instruction sets are like in the following:
 
 -armeabi-v7a (Instruction set for 32bit ARM Processors, versions v5 and v6 are deprecated)
@@ -362,7 +372,7 @@ libraries (.so) that are compiled for different CPU architectures used widely in
 
 To learn more details about these instruction sets and ABIs, please refer to [this link](https://developer.android.com/ndk/guides/abis).
 
-The way we suggest for reducing the size of your application is creating four separate APK files that are each compiled for a specific instruction set. Google Play Store supports  [the publishing of multiple APK files](https://developer.android.com/google/play/publishing/multiple-apks)
+The way we suggest for reducing the size of your application is creating four separate APK files that are each compiled for a specific instruction set. Google Play Store supports [the publishing of multiple APK files](https://developer.android.com/google/play/publishing/multiple-apks)
 , hence it is possible to upload four different APK files and the Play Store application located on user devices will automatically determine which APK to be installed.
 
 ### To reduce the size of your APK:
@@ -387,7 +397,7 @@ More detailed instructions and information about splits function can be found in
 
 ## My application crashes after I set minifyEnabled to true
 
-As mentioned before, NFCRead SDK relies on multiple libraries, one of them being OpenCV. When minifyEnabled is set true, the version of OpenCV we bundle alongside the NFCRead SDK 
+As mentioned before, NFCRead SDK relies on multiple libraries, one of them being OpenCV. When minifyEnabled is set true, the version of OpenCV we bundle alongside the NFCRead SDK
 is also getting obfuscated alongside with the rest of the application. This essentially prevents the NFCRead library from accessing the OpenCV classes and methods and causes crashes.
 
 ### To prevent your application from crashing:
