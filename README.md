@@ -1,4 +1,5 @@
 # NFCREAD SDK SAMPLE PROJECT!
+-Please Visit More Details | Github; https://github.com/Sanalogi/NFCREAD-Android-SDK-Example
 
 NFC Read is a tool designed for reading and verifying the official documents such as identity cards or passports. An example use case can be a police officer performing ID checks on the street, where NFC Read can be used with ease via an Android or an IOS smartphone to scan and verify the presented official document. The application does not require any specialised equipment or additional training.
 
