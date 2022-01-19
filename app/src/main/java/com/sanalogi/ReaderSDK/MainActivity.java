@@ -1,7 +1,7 @@
 /**
  * Hero is the main entity we'll be using to . . .
  *
- * @author Can Samet KATKAT
+ * @author NFCRead
  */
 package com.sanalogi.ReaderSDK;
 
