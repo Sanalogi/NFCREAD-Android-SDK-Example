@@ -54,7 +54,7 @@ android {
 }
 dependencies {
     ...
-    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:1.2.8'
+    implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:2.0.1'
 }
 ```
 

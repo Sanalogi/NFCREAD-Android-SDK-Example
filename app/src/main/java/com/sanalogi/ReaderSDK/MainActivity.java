@@ -12,11 +12,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -53,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
     private TextView name;
     private TextView surname;
     private ImageView ownerImage;
-    private ImageView docImage;
-    private ImageView docFrontImage;
+    private ImageView docFrontImage,imgUpperChipset,imgFaceCard,imgGhostCard,imgSignCard,imgFlag,imgHologram,imgBarcodeResult;
     private TextView birthDate;
     private TextView expiryDate;
     private TextView placeOfBirth;
@@ -85,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
 
         infoScroll = findViewById(R.id.infoScroll);
         documentType = findViewById(R.id.documentType);
+        imgUpperChipset = findViewById(R.id.imgUpperChipset);
+        imgFaceCard = findViewById(R.id.imgFaceCard);
+        imgGhostCard = findViewById(R.id.imgGhostCard);
+        imgSignCard = findViewById(R.id.imgSignCard);
+        imgFlag = findViewById(R.id.imgFlag);
+        imgHologram = findViewById(R.id.imgHologram);
+        imgBarcodeResult = findViewById(R.id.imgBarcodeResult);
         documentNumber = findViewById(R.id.documentNumber);
         documentCountry = findViewById(R.id.documentCountry);
         documentOwnerNationality = findViewById(R.id.documentOwnerNationality);
@@ -93,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
         name = findViewById(R.id.documentOwnerName2);
         surname = findViewById(R.id.documentOwnerSurname);
         ownerImage = findViewById(R.id.nfcDialogImage);
-        docImage = findViewById(R.id.passportImage);
         docFrontImage = findViewById(R.id.idCardFrontImage);
         birthDate = findViewById(R.id.documentOwnerBirthDate);
         expiryDate = findViewById(R.id.documentExpiryDate);
@@ -213,9 +221,16 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
         if (passportModel.getBiometricImage() != null) {
             ownerImage.setImageBitmap(passportModel.getBiometricImage());
         }
-        if (passportModel.getPassportImage() != null) {
-            docImage.setImageBitmap(passportModel.getPassportImage());
-        }
+        imgFlag.setImageBitmap(convertBitmapFromBase64(passportModel.getFlagImageBase64()));
+        imgGhostCard.setImageBitmap(convertBitmapFromBase64(passportModel.getGhostImageBase64()));
+        imgUpperChipset.setImageBitmap(convertBitmapFromBase64(passportModel.getUpperChipset()));
+        imgFaceCard.setImageBitmap(convertBitmapFromBase64(passportModel.getFaceImageBase64()));
+        imgSignCard.setImageBitmap(convertBitmapFromBase64(passportModel.getSignImageBase64()));
+        imgHologram.setImageBitmap(convertBitmapFromBase64(passportModel.getHologramImageBase64()));
+        imgBarcodeResult.setImageBitmap(convertBitmapFromBase64(passportModel.getBarcodeBase64()));
+     //   if (passportModel.getPassportImage() != null) {
+     //   docImage.setImageBitmap(convertBitmapFromBase64(passportModel.getPassportImageBase64()));
+      //  }
     }
 
     @Override
@@ -289,7 +304,10 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
 
         dialog.show();
     }
-
+    private Bitmap convertBitmapFromBase64(String base64){
+        byte[] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
     @Override
     public void scanResult(PassportModel passportModel) {
         if (passportModel != null) {
@@ -297,10 +315,10 @@ public class MainActivity extends AppCompatActivity implements ScanResultInterfa
             passportDatas = passportModel;
             setDocValues(passportModel);
 
-            if (passportModel.getIdCardFrontImage() != null) {
+          ///*  if (passportModel.getIdCardFrontImage() != null) {
                 docFrontImage.setVisibility(View.VISIBLE);
-                docFrontImage.setImageBitmap(passportModel.getIdCardFrontImage());
-            }
+                docFrontImage.setImageBitmap(convertBitmapFromBase64(passportModel.getFrontImageBase64()));
+          //  }*/
 
             infoScroll.setVisibility(View.VISIBLE);
             nfcbutton.setVisibility(View.VISIBLE);
