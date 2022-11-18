@@ -54,6 +54,9 @@ android {
 }
 dependencies {
     ...
+    //NFC and MRZ Reader (Alternative 1) stable...
+    'org.bitbucket.sanalogi:sanalogireaderandroid:v1.2.15-SNAPSHOT'
+    //Only MRZ + OCR Crop SDK (Alternative 2 please ask about)
     implementation 'org.bitbucket.sanalogi:sanalogiReaderAndroid:2.0.1'
 }
 ```
