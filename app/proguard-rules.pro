@@ -19,14 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
--keep public class com.sanalogi.ReaderSDK.** {
-    public * ;
-}
-# This prevents OpenCV related software crashes
--keep class org.opencv.** { *;}
-
-# This prevents NFC related software bugs
--keep class net.sf.scuba.smartcards.IsoDepCardService {*;}
--keep class org.spongycastle.** {*;}
--keep class org.bouncycastle.** {*;}

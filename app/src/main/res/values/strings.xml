@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">NFCREADSDK</string>
-    <string name="apiKey">Your API Key goes here</string>
+    <string name="app_name">Android Sample NFCRead</string>
+    <string name="license">API-KEY-HERE</string>
 </resources>

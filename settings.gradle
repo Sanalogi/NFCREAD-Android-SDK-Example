@@ -1,1 +1,33 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+        maven {
+            url 'https://jitpack.io'
+            credentials { username authToken }
+
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+        maven {
+            url 'https://jitpack.io'
+            credentials { username authToken }
+
+        }
+
+    }
+}
+rootProject.name = "Android Sample NFCRead"
 include ':app'
