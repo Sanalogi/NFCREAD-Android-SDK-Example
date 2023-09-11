@@ -53,7 +53,7 @@ android {
 }
 dependencies {
 
-    implementation 'org.bitbucket.sanalogi:nfc_read_android_sdk:0.0.9'
+    implementation 'org.bitbucket.sanalogi:nfc_read_android_sdk:0.0.10'
 }
 ```
 
