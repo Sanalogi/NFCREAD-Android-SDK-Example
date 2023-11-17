@@ -53,7 +53,7 @@ android {
 }
 dependencies {
 
-    implementation 'org.bitbucket.sanalogi:nfc_read_android_sdk:0.0.10'
+    implementation 'org.bitbucket.sanalogi:nfc_read_android_sdk:0.1.3'
 }
 ```
 
@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity implements NfcScanResultInte
 ```
 ```java
     boolean passportMode = false;
-    Intent intent = new ScanCardIntent.Builder(MainActivity.this ).setPassportMode(passportMode).build();
+    Intent intent = new ScanCardIntent.Builder(MainActivity.this )
+					.setPassportMode(passportMode)
+					.setDescription("this text show above card holder")
+					.build();
     startActivityForResult(intent, REQUEST_CODE_SCAN_CARD);
 ```
 
