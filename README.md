@@ -38,7 +38,7 @@ allprojects {
 ## 2: Include the Jitpack token to your gradle.properties (root/gradle.properties)
 
 ```
-    authToken=jp_7co03jomd4r4i1929q93i601bi
+    authToken=jp_rl2tk0fi1flrsjjr21iueurclc
 ```
 
 ## 3: Add the dependencies to your app's build.gradle file (app/build.gradle)
